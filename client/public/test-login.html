@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Testar Login - Decorar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 4px;
+            background: #e9ecef;
+        }
+        .link {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Testar Login - Decorar</h1>
+        <p>Use esta página para testar o sistema de login.</p>
+        
+        <div class="status">
+            <h3>Status Atual:</h3>
+            <div id="auth-status">A verificar...</div>
+        </div>
+        
+        <button onclick="clearAuth()">Limpar Autenticação</button>
+        <button onclick="checkAuth()">Verificar Status</button>
+        <button onclick="goToLogin()">Ir para Login</button>
+        <button onclick="goToHome()">Ir para Home</button>
+        
+        <div style="margin-top: 30px;">
+            <h3>Instruções:</h3>
+            <ol>
+                <li>Clique em "Limpar Autenticação" para fazer logout</li>
+                <li>Clique em "Ir para Login" para testar a tela de login</li>
+                <li>Use as credenciais: admin@decorar.pt / admin123</li>
+                <li>Após login, você será redirecionado para a página principal</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function checkAuth() {
+            const isAuthenticated = localStorage.getItem('isAuthenticated');
+            const userEmail = localStorage.getItem('userEmail');
+            const statusDiv = document.getElementById('auth-status');
+            
+            if (isAuthenticated === 'true') {
+                statusDiv.innerHTML = `<strong>Autenticado:</strong> ${userEmail || 'Usuário desconhecido'}`;
+                statusDiv.style.background = '#d4edda';
+            } else {
+                statusDiv.innerHTML = '<strong>Não autenticado</strong>';
+                statusDiv.style.background = '#f8d7da';
+            }
+        }
+        
+        function clearAuth() {
+            localStorage.removeItem('isAuthenticated');
+            localStorage.removeItem('userEmail');
+            checkAuth();
+            alert('Autenticação limpa com sucesso!');
+        }
+        
+        function goToLogin() {
+            window.location.href = 'http://localhost:5000/login';
+        }
+        
+        function goToHome() {
+            window.location.href = 'http://localhost:5000/';
+        }
+        
+        // Verificar status ao carregar a página
+        checkAuth();
+    </script>
+</body>
+</html>
